@@ -20,4 +20,10 @@ extern bool judge_next_window;
 extern ALLEGRO_EVENT_QUEUE *event_queue;
 extern ALLEGRO_TIMER *fps;
 
+extern ALLEGRO_FONT *font;
+extern ALLEGRO_BITMAP *floorBackground;
+extern ALLEGRO_BITMAP *dirtBackground;
+extern FILE *fp;
+extern char mapString[30];
+
 #endif

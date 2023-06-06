@@ -70,14 +70,14 @@ void game_begin() {
     al_restore_default_mixer();
     al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
     // set the volume of instance
-    al_set_sample_instance_gain(sample_instance, 1) ;
+    al_set_sample_instance_gain(sample_instance, 0) ;
     al_play_sample_instance(sample_instance);
     al_start_timer(fps);
     // initialize the menu before entering the loop
     menu_init();
 
 }
-void game_update(){
+void update(){
     if( judge_next_window ){
         if( window == 1 ){
             // not back menu anymore, therefore destroy it
@@ -89,7 +89,7 @@ void game_update(){
         }
     }
     if( window == 2 ){
-        charater_update();
+        game_update();
     }
 }
 int process_event(){
@@ -100,7 +100,7 @@ int process_event(){
     if( window == 1 ){
         menu_process(event);
     }else if( window == 2 ){
-        charater_process(event);
+        game_process(event);
     }
 
     // Shutdown our program
@@ -110,7 +110,7 @@ int process_event(){
         if(event.timer.source == fps)
             draw = true;
     if(draw) {
-        game_update();
+        update();
     }
     return 0;
 }

@@ -1,28 +1,29 @@
 #ifndef BFS_H_INCLUDED
 #define BFS_H_INCLUDED
 
+#include "utility.h"
+
 // Queue part
-int queue_X[500];
-int queue_Y[500];
-int queueFrontIndex;
-int queueBackIndex;
+extern pair queue[500];
+extern int queueFrontIndex;
+extern int queueBackIndex;
 
 void QueuePush(int x, int y);
 void QueuePop();
 void QueueClear();
 int QueueSize();
-int QueueFrontX();
-int QueueFrontY();
+pair QueueFront();
 
 // BFS part
-int dx[4];
-int dy[4];
-int next[30][30];
-int distance[30][30];
+extern int dx[4];
+extern int dy[4];
+extern int distance[30][30];
+extern pair next[30][30];
+
 
 int BlockValid(int x, int y);
 int PrevStep(int x, int y);
-extern void BFS(int sx, int sy, int ex, int ey);
-extern int GetNextStep(int x, int y); // encode as 30 * x + y, -1 if not found
+void BFS(int sx, int sy, int ex, int ey);
+pair GetNextStep(int x, int y); // return coordinate of next step
 
 #endif // BFS_H_INCLUDED

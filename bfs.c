@@ -1,20 +1,17 @@
 #include "bfs.h"
 #include <allegro5/allegro.h>
 
-int queue_X[500];
-int queue_Y[500];
+pair queue[500];
 int queueFrontIndex = 0;
 int queueBackIndex = 0;
 
-bool firstTime = false;
 int dx[4] = {0, 0, 1, -1};
 int dy[4] = {1, -1 ,0, 0};
-int next[30][30];
+pair next[30][30];
 int distance[30][30];
 
 void QueuePush(int x, int y){
-    queue_X[queueBackIndex] = x;
-    queue_Y[queueBackIndex] = y;
+    queue[queueBackIndex] = make_pair(x, y);
     queueBackIndex += 1;
     if(queueBackIndex == 500)
         queueBackIndex = 0;
@@ -26,12 +23,8 @@ void QueuePop(){
         queueFrontIndex = 0;
 }
 
-int QueueFrontX(){
-    return queue_X[queueFrontIndex];
-}
-
-int QueueFrontY(){
-    return queue_Y[queueFrontIndex];
+pair QueueFront(){
+    return queue[queueFrontIndex];
 }
 
 void QueueClear(){
@@ -62,31 +55,30 @@ extern void BFS(int sx, int sy, int ex, int ey){
     // Initiate distance
     for(int i = 0; i < 30; i++)
         for(int j = 0; j < 30; j++)
-            distance[i][j] = -1, next[i][j] = -1;
+            distance[i][j] = -1, next[i][j] = make_pair(-1, -1);
     QueueClear();
     QueuePush(sx, sy);
     distance[sx][sy] = 0;
     while(QueueSize() > 0){
-        int x = QueueFrontX();
-        int y = QueueFrontY();
+        pair cur = QueueFront();
         QueuePop();
         for(int i = 0; i < 4; i++){
-            if(BlockValid(x + dx[i], y + dy[i]) && distance[x + dx[i]][y + dy[i]] == -1){
-                QueuePush(x + dx[i], y + dy[i]);
-                distance[x + dx[i]][y + dy[i]] = distance[x][y] + 1;
+            if(BlockValid(cur.first + dx[i], cur.second + dy[i]) && distance[cur.first + dx[i]][cur.second + dy[i]] == -1){
+                QueuePush(cur.first + dx[i], cur.second + dy[i]);
+                distance[cur.first + dx[i]][cur.second + dy[i]] = distance[cur.first][cur.second] + 1;
             }
         }
     }
     int curX = ex, curY = ey;
-    next[curX][curY] = -1;
+    next[curX][curY] = make_pair(curX, curY);
     while(curX != sx || curY != sy){
         int prev = PrevStep(curX, curY);
-        next[curX + dx[prev]][curY + dy[prev]] = curX * 30 + curY;
+        next[curX + dx[prev]][curY + dy[prev]] = make_pair(curX, curY);
         curX += dx[prev];
         curY += dy[prev];
     }
 }
 
-extern int GetNextStep(int x, int y){
-    return next[x][y];
+extern pair GetNextStep(int x, int y){
+    return make_pair(next[x][y].first * 64 + 32, next[x][y].second * 64 + 32);
 }
