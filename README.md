@@ -13,3 +13,12 @@ Introduction to programming 1 final project
 - Allegro install(Windows):  https://github.com/yuan7122/I2P1_Final_project/blob/master/tutorial/Allegro_install.pdf
 - Allegro documentation: https://liballeg.org/a5docs/trunk/
 - For more information refer to [tutorial folder](https://github.com/yuan7122/I2P1_Final_project/tree/master/tutorial)
+
+## Current function
+- A character can move to the block clicked by the mouse
+
+## Todo
+- [ ] Decide Subject of the game
+- [ ] Decide how to battle with enemy
+- [ ] Create npc
+- [ ] Create enemy 
