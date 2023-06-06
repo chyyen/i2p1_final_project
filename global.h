@@ -2,6 +2,7 @@
 #define GLOBAL_H_INCLUDED
 #define GAME_TERMINATE -1
 #include <stdio.h>
+#include <string.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
@@ -18,4 +19,5 @@ extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool judge_next_window;
 extern ALLEGRO_EVENT_QUEUE *event_queue;
 extern ALLEGRO_TIMER *fps;
+
 #endif

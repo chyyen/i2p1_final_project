@@ -4,7 +4,7 @@ ALLEGRO_FLAGS := $(shell pkg-config --cflags --libs "$(ALLEGRO_LIBRARIES) <= 5.2
 CC := gcc
 OUT:= game
 # MAIN:= mac_main.o GameWindow.o scene.o global.o charater.o
-MAIN:= mac_main.c GameWindow.c scene.c global.c charater.c
+MAIN:= mac_main.c GameWindow.c scene.c global.c charater.c bfs.c
 
 all: $(MAIN)
 	$gcc -o $(OUT) $(MAIN) $(ALLEGRO_FLAGS)

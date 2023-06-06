@@ -1,4 +1,5 @@
 #include "charater.h"
+#include "bfs.h"
 
 // the state of character
 enum {STOP = 0, MOVE, ATK};
@@ -16,6 +17,9 @@ typedef struct character
 }Character;
 Character chara;
 ALLEGRO_SAMPLE *sample = NULL;
+
+int destX, destY;
+
 void character_init(){
     // load character images
     for(int i = 1 ; i <= 2 ; i++){
@@ -40,6 +44,8 @@ void character_init(){
     chara.x = WIDTH/2;
     chara.y = HEIGHT/2;
     chara.dir = false;
+    destX = chara.x / 64;
+    destY = chara.y / 64;
 
     // initial the animation component
     chara.state = STOP;
@@ -60,10 +66,20 @@ void charater_process(ALLEGRO_EVENT event){
         chara.anime = 0;
     }else if( event.type == ALLEGRO_EVENT_KEY_UP ){
         key_state[event.keyboard.keycode] = false;
+    }else if( event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP ) {
+        if(event.mouse.button == 1){
+            destX = event.mouse.x / 64;
+            destY = event.mouse.y / 64;
+            int blockX = chara.x / 64, blockY = chara.y / 64;
+            if(destX != blockX || destY != blockY){
+                BFS(blockX, blockY, destX, destY);
+            }
+        }
     }
 }
 void charater_update(){
     // use the idea of finite state machine to deal with different state
+    /*
     if( key_state[ALLEGRO_KEY_W] ){
         chara.y -= 5;
         chara.state = MOVE;
@@ -86,6 +102,18 @@ void charater_update(){
     }else if ( chara.anime == 0 ){
         chara.state = STOP;
     }
+    */
+    int blockX = chara.x / 64, blockY = chara.y / 64;
+    int nextStep = GetNextStep(blockX, blockY);
+    if( (blockX != destX || blockY != destY) && nextStep != -1){
+        int directionX = nextStep / 30 - blockX;
+        int directionY = nextStep % 30 - blockY;
+        chara.x += directionX * 5;
+        chara.y += directionY * 5;
+        chara.state = MOVE;
+    }
+    else
+        chara.state = STOP;
 }
 void character_draw(){
     // with the state, draw corresponding image

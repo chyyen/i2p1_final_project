@@ -1,7 +1,11 @@
 #include "scene.h"
 
 ALLEGRO_FONT *font = NULL;
-ALLEGRO_BITMAP *background = NULL;
+ALLEGRO_BITMAP *floorBackground = NULL;
+ALLEGRO_BITMAP *dirtBackground = NULL;
+
+char mapString[30];
+FILE *fp = NULL;
 
 // function of menu
 void menu_init(){
@@ -24,14 +28,26 @@ void menu_destroy(){
 // function of game_scene
 void game_scene_init(){
     character_init();
-    background = al_load_bitmap("./image/stage.jpg");
+    floorBackground = al_load_bitmap("./image/floor.png");
+    dirtBackground = al_load_bitmap("./image/dirt.png");
 }
 void game_scene_draw(){
-    al_draw_bitmap(background, 0, 0, 0);
+    fp = fopen("maps/map1.txt", "r");
+    // draw map
+    int j = 0;
+    while(fgets(mapString, 30, fp) != NULL) {
+        for (int i = 0; i < 25; i++){
+            if(mapString[i] == '0')
+                al_draw_bitmap(floorBackground, i * 64, j * 64, 0);
+            else
+                al_draw_bitmap(dirtBackground, i * 64, j * 64, 0);
+        }
+        j++;
+    }
     character_draw();
-
+    fclose(fp);
 }
 void game_scene_destroy(){
-    al_destroy_bitmap(background);
+    al_destroy_bitmap(floorBackground);
     character_destory();
 }

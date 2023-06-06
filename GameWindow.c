@@ -109,7 +109,9 @@ int process_event(){
     else if(event.type == ALLEGRO_EVENT_TIMER)
         if(event.timer.source == fps)
             draw = true;
-    if(draw) game_update();
+    if(draw) {
+        game_update();
+    }
     return 0;
 }
 void game_draw(){
