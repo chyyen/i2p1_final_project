@@ -1,5 +1,5 @@
 #include "bfs.h"
-#include <allegro5/allegro.h>
+#include <stdio.h>
 
 pair queue[500];
 int queueFrontIndex = 0;
@@ -44,10 +44,12 @@ int BlockValid(int x, int y){
 }
 
 int PrevStep(int x, int y){
-    for(int i = 0; i < 4; i++){
+    int i = get_rand(0, 4), tmp = i;
+    do{
         if(BlockValid(x + dx[i], y + dy[i]) && distance[x + dx[i]][y + dy[i]] == distance[x][y] - 1)
             return i;
-    }
+        i = (i + 1) % 4;
+    }while(i != tmp);
     return -1;
 }
 

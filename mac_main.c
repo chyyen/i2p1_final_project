@@ -3,7 +3,7 @@
 
 int real_main(int argc, char **argv)
 {
-    Game_establish();
+    return Game_establish();
 }
 
 int main(int argc, char **argv)

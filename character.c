@@ -1,19 +1,6 @@
 #include "character.h"
 
 // the state of character
-enum {STOP = 0, MOVE, ATK};
-typedef struct character
-{
-    int x, y; // the position of image
-    int width, height; // the width and height of image
-    bool dir; // left: false, right: true
-    int state; // the state of character
-    ALLEGRO_BITMAP *img_move[2];
-    ALLEGRO_BITMAP *img_atk[2];
-    ALLEGRO_SAMPLE_INSTANCE *atk_Sound;
-    int anime; // counting the time of animation
-    int anime_time; // indicate how long the animation
-}Character;
 Character chara;
 ALLEGRO_SAMPLE *sample = NULL;
 
@@ -65,15 +52,6 @@ void character_process(ALLEGRO_EVENT event){
         chara.anime = 0;
     }else if( event.type == ALLEGRO_EVENT_KEY_UP ){
         key_state[event.keyboard.keycode] = false;
-    }else if( event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP ) {
-        if(event.mouse.button == 1){
-            destX = event.mouse.x / 64;
-            destY = event.mouse.y / 64;
-            int blockX = chara.x / 64, blockY = chara.y / 64;
-            if(destX != blockX || destY != blockY){
-                BFS(blockX, blockY, destX, destY);
-            }
-        }
     }
 }
 void character_update(){
@@ -84,7 +62,11 @@ void character_update(){
         int direction_y = (nextStep.second - chara.y) / abs(nextStep.second - chara.y);
         int length_x = min(5, (nextStep.first - chara.x) / direction_x);
         int length_y = min(5, (nextStep.second - chara.y) / direction_y);
-        move_character(direction_x * length_x, (length_x ? 0 : direction_y * length_y));
+        //if(get_rand(0, 2) == 1)
+            move_character(direction_x * length_x, (length_x ? 0 : direction_y * length_y));
+        //else
+         //   move_character((length_y ? 0 : direction_x * length_x), direction_y * length_y);
+        chara.state = MOVE;
     }
     else
         chara.state = STOP;
@@ -99,10 +81,23 @@ void move_character(int x, int y){
     chara.state = MOVE;
 }
 
-void character_destory(){
+void character_destroy(){
     al_destroy_bitmap(chara.img_atk[0]);
     al_destroy_bitmap(chara.img_atk[1]);
     al_destroy_bitmap(chara.img_move[0]);
     al_destroy_bitmap(chara.img_move[1]);
     al_destroy_sample_instance(chara.atk_Sound);
+}
+
+void set_destination(int x, int y){
+    destX = x / 64;
+    destY = y / 64;
+    int blockX = chara.x / 64, blockY = chara.y / 64;
+    if(destX != blockX || destY != blockY){
+        BFS(blockX, blockY, destX, destY);
+    }
+}
+
+int get_character_state(){
+    return chara.state;
 }

@@ -5,6 +5,11 @@ void game_update(){
 }
 
 void game_process(ALLEGRO_EVENT event){
+    if(event.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP){
+        if(event.mouse.button == 1){
+            set_destination(event.mouse.x, event.mouse.y);
+        }
+    }
     character_process(event);
 }
 
@@ -30,10 +35,15 @@ void game_scene_draw(){
         }
         j++;
     }
+
+    if(get_character_state() == MOVE){
+        al_draw_rectangle(destX * 64, destY * 64, destX * 64 + 64, destY * 64 + 64, al_map_rgb(0, 0, 0), 3);
+    }
+
     character_draw();
     fclose(fp);
 }
 void game_scene_destroy(){
     al_destroy_bitmap(floorBackground);
-    character_destory();
+    character_destroy();
 }

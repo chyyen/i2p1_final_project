@@ -11,6 +11,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+#include "utility.h"
+
 // note that you can't assign initial value here!
 extern const float FPS;
 extern const int WIDTH;
