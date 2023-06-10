@@ -3,7 +3,7 @@
 // variables for global usage
 const float FPS = 60.0;
 const int WIDTH = 1600;
-const int HEIGHT = 960;
+const int HEIGHT = 832;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *fps = NULL;
 bool key_state[ALLEGRO_KEY_MAX] = {false};

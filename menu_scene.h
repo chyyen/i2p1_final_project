@@ -9,3 +9,4 @@ void menu_draw();
 void menu_destroy();
 
 extern vector* menu_buttons;
+extern Button* start_button;

@@ -5,7 +5,7 @@ void menu_start_button_on_click(Button* button) {
 }
 
 void menu_start_button_init(Button* button) {
-
+    button->display = true;
 }
 
 void menu_start_button_destroy(Button* button) {

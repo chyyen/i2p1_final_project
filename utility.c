@@ -43,9 +43,14 @@ int vector_get_size(vector* v){
     return v->size;
 }
 
+void vector_clear(vector* v){
+    v->size = 0;
+}
+
 vector *newVector(){
     vector *v = malloc(sizeof(vector));
-    v->capacity = 0;
+    v->objects = malloc(sizeof(void*));
+    v->capacity = 1;
     v->size = 0;
     return v;
 }

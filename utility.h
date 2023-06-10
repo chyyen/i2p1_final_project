@@ -21,6 +21,7 @@ void vector_push_back(vector* v, void* object);
 void vector_pop_back(vector* v);
 void* vector_at(vector* v, int index);
 int vector_get_size(vector* v);
+void vector_clear(vector* v);
 vector *newVector();
 
 // min / max
