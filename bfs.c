@@ -21,26 +21,23 @@ int PrevStep(int x, int y){
 }
 
 extern void BFS(int sx, int sy, int ex, int ey){
-    Queue* queue = new_queue();
+    Queue_pair* queue = new_queue_pair();
     // Initiate distance
     for(int i = 0; i < 30; i++)
         for(int j = 0; j < 30; j++)
             distance[i][j] = -1, next[i][j] = make_pair(-1, -1);
-    Pair* tmp = (Pair*)malloc(sizeof(Pair) * 400);
-    *tmp = make_pair(sx, sy);
-    queue_clear(queue);
-    queue_push(queue, (void*)tmp);
-    tmp++;
+    Pair cur = make_pair(sx, sy);
+    queue_pair_clear(queue);
+    queue_pair_push(queue, cur);
     distance[sx][sy] = 0;
-    while(queue_get_size(queue) > 0){
-        Pair cur = *(Pair*) queue_front(queue);
-        queue_pop(queue);
+    while(queue_pair_get_size(queue) > 0){
+        Pair cur = queue_pair_front(queue);
+        queue_pair_pop(queue);
         for(int i = 0; i < 4; i++){
             if(BlockValid(cur.first + dx[i], cur.second + dy[i]) && distance[cur.first + dx[i]][cur.second + dy[i]] == -1){
-                *tmp = make_pair(cur.first + dx[i], cur.second + dy[i]);
-                queue_push(queue, (void*)tmp);
-                distance[tmp->first][tmp->second] = distance[cur.first][cur.second] + 1;
-                tmp++;
+                Pair tmp = make_pair(cur.first + dx[i], cur.second + dy[i]);
+                queue_pair_push(queue, tmp);
+                distance[tmp.first][tmp.second] = distance[cur.first][cur.second] + 1;
             }
         }
     }

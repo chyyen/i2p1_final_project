@@ -1,6 +1,6 @@
 #include "game_scene.h"
 
-Vector *buttons;
+Vector_pointer *buttons;
 Button *dialogButton;
 
 void game_update(){
@@ -36,9 +36,9 @@ void game_scene_init(){
     puts("dialog box init");
     // initialize buttons
     dialogButton = newButton(1400, 700, 50, 50, dialog_button_on_click, dialog_button_init, dialog_button_destroy, dialog_button_draw);
-    buttons = new_vector();
+    buttons = new_vector_pointer();
     dialog_button_init(dialogButton);
-    vector_push_back(buttons, (void*)dialogButton);
+    vector_pointer_push_back(buttons, (void*)dialogButton);
     puts("game scene init");
 }
 
@@ -71,7 +71,7 @@ void game_scene_draw(){
     dialogButton->display = dialog_box.display;
     // draw buttons
     for(int i = 0; i < buttons->size; i++){
-        Button *button = (Button*)vector_at(buttons, i);
+        Button *button = (Button*)vector_pointer_at(buttons, i);
         if(button->display == true)
             DrawButton(button);
     }
