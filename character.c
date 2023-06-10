@@ -56,7 +56,7 @@ void character_process(ALLEGRO_EVENT event){
 }
 void character_update(){
     int blockX = chara.x / 64, blockY = chara.y / 64;
-    pair nextStep = GetNextStep(blockX, blockY);
+    Pair nextStep = GetNextStep(blockX, blockY);
     if(chara.x != destX * 64 + 32 || chara.y != destY * 64 + 32){
         int direction_x = (nextStep.first - chara.x) / abs(nextStep.first - chara.x);
         int direction_y = (nextStep.second - chara.y) / abs(nextStep.second - chara.y);

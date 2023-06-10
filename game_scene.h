@@ -9,5 +9,5 @@ void game_scene_init();
 void game_scene_draw();
 void game_scene_destroy();
 
-extern vector *buttons;
+extern Vector *buttons;
 extern Button *dialogButton;

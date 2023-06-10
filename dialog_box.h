@@ -7,8 +7,9 @@ struct _dialog_box{
     bool display;
     int index;
     int len;
-    char dialog[100];
-    char current_loading_dialog[100];
+    char* buffer;
+    Vector* dialog;
+    Vector* current_loading_dialog;
 };
 
 extern struct _dialog_box dialog_box;

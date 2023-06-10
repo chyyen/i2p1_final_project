@@ -49,5 +49,5 @@ void game_scene_draw(){
 }
 void game_scene_destroy(){
     al_destroy_bitmap(floorBackground);
-    character_destory();
+    character_destroy();
 }

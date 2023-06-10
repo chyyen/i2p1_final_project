@@ -1,6 +1,6 @@
 #include "game_scene.h"
 
-vector *buttons;
+Vector *buttons;
 Button *dialogButton;
 
 void game_update(){
@@ -20,6 +20,7 @@ void game_process(ALLEGRO_EVENT event){
 }
 
 void game_scene_init(){
+    puts("init ing...");
     // initialize font
     font = al_load_ttf_font("./font/pirulen.ttf",16,0);
     // initialize background
@@ -32,11 +33,13 @@ void game_scene_init(){
     fp = fopen("dialogs/dialog1.txt", "r");
     assign_dialog_box(fp);
     fclose(fp);
+    puts("dialog box init");
     // initialize buttons
     dialogButton = newButton(1400, 700, 50, 50, dialog_button_on_click, dialog_button_init, dialog_button_destroy, dialog_button_draw);
-    buttons = newVector();
+    buttons = new_vector();
     dialog_button_init(dialogButton);
-    vector_push_back(buttons, dialogButton);
+    vector_push_back(buttons, (void*)dialogButton);
+    puts("game scene init");
 }
 
 void game_scene_draw(){

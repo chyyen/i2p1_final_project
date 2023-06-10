@@ -1,10 +1,10 @@
 #include "menu_scene.h"
 
-vector* menu_buttons;
+Vector* menu_buttons;
 Button* start_button;
 
 void menu_init(){
-    menu_buttons = newVector();
+    menu_buttons = new_vector();
     start_button = newButton(WIDTH / 2, HEIGHT / 2, 300, 60, menu_start_button_on_click, menu_start_button_init, menu_start_button_destroy, menu_start_button_draw);
     menu_start_button_init(start_button);
     vector_push_back(menu_buttons, start_button);

@@ -8,5 +8,5 @@ void menu_process(ALLEGRO_EVENT event);
 void menu_draw();
 void menu_destroy();
 
-extern vector* menu_buttons;
+extern Vector* menu_buttons;
 extern Button* start_button;
