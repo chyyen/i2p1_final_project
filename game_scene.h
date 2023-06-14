@@ -3,7 +3,7 @@
 #include "dialog_button.h"
 #include "dialog_box.h"
 
-void game_update();
+void game_update(double delta_time);
 void game_process(ALLEGRO_EVENT event);
 void game_scene_init();
 void game_scene_draw();

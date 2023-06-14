@@ -18,6 +18,8 @@ int Game_establish() {
     game_begin();
     puts("Starting the game...");
 
+    timestamp = clock();
+
     while ( msg != GAME_TERMINATE ) {
         msg = game_run();
         if ( msg == GAME_TERMINATE )
@@ -77,19 +79,27 @@ void game_begin() {
     menu_init();
 
 }
-void update(){
-    if( judge_next_window ){
-        if( window == 1 ){
+void update(double delta_time){
+    if( next_window ) {
+        if (next_window == 1) {
             // not back menu anymore, therefore destroy it
-            menu_destroy();
+            // menu_destroy();
             // initialize next scene
             game_scene_init();
-            judge_next_window = false;
+            next_window = 0;
             window = 2;
+        } else if (next_window == 2) {
+            // game_scene_destroy();
+            battle_scene_init();
+            next_window = 0;
+            window = 3;
         }
     }
     if( window == 2 ){
-        game_update();
+        game_update(delta_time);
+    }
+    if( window == 3 ){
+        battle_scene_update(delta_time);
     }
 }
 int process_event(){
@@ -101,8 +111,9 @@ int process_event(){
         menu_process(event);
     }else if( window == 2 ){
         game_process(event);
+    }else if( window == 3 ){
+        battle_scene_process(event);
     }
-
     // Shutdown our program
     if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         return GAME_TERMINATE;
@@ -110,7 +121,9 @@ int process_event(){
         if(event.timer.source == fps)
             draw = true;
     if(draw) {
-        update();
+        double delta_time = (double)(clock() - timestamp) / (double)CLOCKS_PER_SEC;
+        update(delta_time);
+        timestamp = clock();
     }
     return 0;
 }
@@ -119,6 +132,8 @@ void game_draw(){
         menu_draw();
     }else if( window == 2 ){
         game_scene_draw();
+    }else if( window == 3 ){
+        battle_scene_draw();
     }
     al_flip_display();
 }
@@ -138,5 +153,6 @@ void game_destroy() {
     // Make sure you destroy all things
     al_destroy_event_queue(event_queue);
     al_destroy_display(display);
-    game_scene_destroy();
+    // game_scene_destroy();
+    // battle_scene_destroy();
 }

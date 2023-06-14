@@ -54,7 +54,7 @@ void character_process(ALLEGRO_EVENT event){
         key_state[event.keyboard.keycode] = false;
     }
 }
-void character_update(){
+void character_update(double delta_time){
     int blockX = chara.x / 64, blockY = chara.y / 64;
     Pair nextStep = GetNextStep(blockX, blockY);
     if(chara.x != destX * 64 + 32 || chara.y != destY * 64 + 32){

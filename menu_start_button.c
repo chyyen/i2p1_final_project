@@ -1,7 +1,7 @@
 #include "menu_start_button.h"
 
 void menu_start_button_on_click(Button* button) {
-    judge_next_window = true;
+    next_window = 1;
 }
 
 void menu_start_button_init(Button* button) {
