@@ -17,10 +17,14 @@ void game_process(ALLEGRO_EVENT event){
         }
     }
     else if(event.type == ALLEGRO_EVENT_KEY_UP) {
-        puts("key up");
         if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {
             next_window = 2;
             return;
+        }
+        if(dialog_box.display == true && event.keyboard.keycode == ALLEGRO_KEY_SPACE){
+            int tmp = 100;
+            while(tmp--)
+                load_next_dialog();
         }
     }
     character_process(event);
@@ -42,7 +46,7 @@ void game_scene_init(){
     fclose(fp);
     puts("dialog box init");
     // initialize buttons
-    dialogButton = newButton(1400, 700, 50, 50, dialog_button_on_click, dialog_button_init, dialog_button_destroy, dialog_button_draw);
+    dialogButton = newButton(1400, 700, 50, 50, NULL, dialog_button_on_click, dialog_button_init, dialog_button_destroy, dialog_button_draw);
     buttons = new_vector_pointer();
     dialog_button_init(dialogButton);
     vector_pointer_push_back(buttons, (void*)dialogButton);

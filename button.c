@@ -1,13 +1,14 @@
 #include "button.h"
 #include <stdlib.h>
 
-Button* newButton(int x, int y, int w, int h,
+Button* newButton(int x, int y, int w, int h, ALLEGRO_BITMAP *image,
                   void (*OnClickCallback)(Button*), void (*InitButton)(Button*), void (*DestroyButton)(Button*), void (*Draw)(Button*)) {
     Button *button = malloc(sizeof(Button));
     button->x = x;
     button->y = y;
     button->w = w;
     button->h = h;
+    button->image = image;
     button->display = false;
     button->OnClickCallback = OnClickCallback;
     button->InitButton = InitButton;
